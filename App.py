@@ -2,21 +2,22 @@ import simpy
 import random
 from Server import Server
 from LoadBalancer import LoadBalancer
+from Request import Request
 
 
 def generate_requests(env, load_balancer):
     request_id = 0
     while True:
-        yield env.timeout(random.expovariate(0.5))  # Time between requests
+        yield env.timeout(3)  # Time between requests
         request_id += 1
-        load_balancer.route_request(f"request-{request_id}")
+        load_balancer.route_request(Request(request_id=request_id))
 
 
 def main():
     env = simpy.Environment()
     servers = [Server(env, i) for i in range(3)]
     load_balancer = LoadBalancer(
-        env, servers, policy="round_robin")  # Change policy here
+        env, servers, policy="shortest_queue")  # Change policy here
 
     env.process(generate_requests(env, load_balancer))
     env.run(until=100)  # Run simulation for 100 units of time
