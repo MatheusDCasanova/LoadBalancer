@@ -20,7 +20,7 @@ def main():
         env, servers, policy="shortest_queue")  # Change policy here
 
     env.process(generate_requests(env, load_balancer))
-    env.run(until=100)  # Run simulation for 100 units of time
+    env.run(until=100)  # Run simulation for 100 units of timee
 
     for server in servers:
         print(f"Server {server.server_id} - Processed: {server.processed_requests}, "
