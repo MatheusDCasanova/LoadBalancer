@@ -37,3 +37,4 @@ class Server:
         if self.processed_requests == 0:
             return 0
         return self.total_wait_time / self.processed_requests
+    
